@@ -27,11 +27,12 @@ _p(
     "AI transition opener with comma",
 )
 
-# Formulaic transitions
+# Formulaic transitions (INFO — legitimate in academic writing, only flag for awareness)
 _p(
     r"\b(Furthermore|Moreover|Additionally|Consequently|Subsequently|"
     r"Nonetheless|Nevertheless|Henceforth)\b,",
     "Formulaic AI transition",
+    Severity.INFO,
 )
 
 # Flowery / inflated verbs
@@ -40,14 +41,14 @@ _p(
     r"spearhead|harness|pave the way|masquerade|"
     r"uniquely positioned|elucidate|endeavor|"
     r"embark|unravel|intricate|multifaceted|pivotal|"
-    r"tapestry|landscape|paradigm shift|synergy)\b",
+    r"tapestry|synergy)\b",
     "AI-typical inflated language",
 )
 
 # Promotional / hype language
 _p(
     r"\b(revolutionary|groundbreaking|game-changing|cutting-edge|"
-    r"state-of-the-art|unprecedented|transformative|"
+    r"unprecedented|transformative|"
     r"next-generation|disruptive|novel approach)\b",
     "Promotional / hype language",
     Severity.ERROR,
@@ -81,7 +82,7 @@ _p(
 )
 
 # Em-dash overuse (ChatGPT signature)
-_p(r"\s—\s", "Em-dash (ChatGPT signature — convert to comma or parenthetical)")
+_p(r"\s—\s", "Em-dash (ChatGPT signature -- consider comma or parenthetical)", Severity.INFO)
 
 # Colon-explanation pattern: "Noun: Explanation"
 _p(

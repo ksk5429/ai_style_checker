@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from datetime import datetime
 
 from checkers.base import CheckerResult, Issue, Severity
 
@@ -133,7 +134,7 @@ class ClaimChecker:
             # Check for future-dated or suspicious references
             for m in _SUSPICIOUS_REF.finditer(line):
                 year = int(m.group(1))
-                if year > 2026:
+                if year > datetime.now().year:
                     issues.append(Issue(
                         checker=self.name,
                         severity=Severity.CRITICAL,

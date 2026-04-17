@@ -95,6 +95,14 @@ def compute_ai_score(results: list[CheckerResult]) -> dict[str, float | str]:
             intro_sim = metrics.get("intro_conclusion_similarity", 0)
             contribution = min(intro_sim * 30, 10)
 
+        elif checker == "structure":
+            undefined = len(metrics.get("undefined_acronyms", []))
+            citation_density = metrics.get("citation_density_per_500w", 2.0)
+            if citation_density < 0.5:
+                contribution += 5
+            contribution += min(undefined * 0.5, 5)
+            contribution = min(contribution, 10)
+
         elif checker == "claims":
             vague = metrics.get("vague_attributions", 0)
             contribution = min(vague * 3, 10)

@@ -134,7 +134,7 @@ def check_file(
 ) -> tuple[list[CheckerResult], dict]:
     """Run all checkers on a single file. Return results and AI score."""
     text = filepath.read_text(encoding="utf-8", errors="replace")
-    if strip_frontmatter:
+    if strip_frontmatter and filepath.suffix in (".qmd", ".md"):
         text = _strip_yaml_frontmatter(text)
 
     lines = text.split("\n")

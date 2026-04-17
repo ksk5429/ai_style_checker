@@ -18,8 +18,11 @@ from checkers.base import CheckerResult, Issue, Severity
 _BE_VERBS = r"(?:is|are|was|were|be|been|being|has been|have been|had been|will be|would be|could be|should be|may be|might be)"
 _PAST_PARTICIPLE = r"(?:[a-z]+ed|[a-z]+en|[a-z]+ied|built|done|found|given|gone|known|made|shown|taken|told|written|seen|set|run|put|paid|met|led|left|kept|held|got|felt|drawn|cut|brought|bought|born|begun|become|chosen|driven|eaten|fallen|flown|forgotten|frozen|hidden|ridden|risen|spoken|stolen|sworn|thrown|torn|worn|woken)"
 
+# Adjectival past participles (not true passive voice)
+_ADJECTIVAL = r"(?!interested|tired|surprised|supposed|designed|required|assumed|based|located|related|concerned|involved|limited|determined|defined|positioned|oriented|associated|composed|comprised|distributed|classified)"
+
 _PASSIVE_RE = re.compile(
-    rf"\b{_BE_VERBS}\s+{_PAST_PARTICIPLE}\b",
+    rf"\b{_BE_VERBS}\s+{_ADJECTIVAL}{_PAST_PARTICIPLE}\b",
     re.IGNORECASE,
 )
 

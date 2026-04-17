@@ -15,7 +15,14 @@ from checkers.base import CheckerResult, Issue, Severity
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
 _ACRONYM_DEF = re.compile(r"\(([A-Z]{2,})\)")  # defined as "Full Name (ABC)"
 _ACRONYM_USE = re.compile(r"\b([A-Z]{2,})\b")
-_CITATION = re.compile(r"(?:\[@[^\]]+\]|\\\[\\cite\{[^}]+\}|\\citep?\{[^}]+\}|\([A-Z][a-z]+(?:\s+(?:et al\.)?,?\s*\d{4})+\))")
+_CITATION = re.compile(
+    r"(?:\[@[^\]]+\]"                                    # Pandoc: [@key]
+    r"|\\\[\\cite\{[^}]+\}"                              # LaTeX: \[\cite{key}]
+    r"|\\citep?\{[^}]+\}"                                # LaTeX: \cite{key}, \citep{key}
+    r"|\([A-Z][a-z]+(?:\s+(?:et al\.)?,?\s*\d{4})+\)"   # Author-year: (Smith, 2024)
+    r"|\[\d+(?:[,\s-]+\d+)*\]"                           # Numeric: [12], [1, 3], [1-5]
+    r")"
+)
 
 # Common abbreviations to exclude from acronym check
 _EXCLUDE_ACRONYMS = frozenset({
