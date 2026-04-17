@@ -9,6 +9,9 @@ from checkers.passive_voice import PassiveVoiceChecker
 from checkers.structure import StructureChecker
 from checkers.repetition import RepetitionChecker
 from checkers.claims import ClaimChecker
+from checkers.sentence_openers import SentenceOpenerChecker
+from checkers.entropy import EntropyChecker
+from checkers.fingerprint import FingerprintChecker
 
 ALL_CHECKERS = [
     AIPatternChecker,
@@ -20,6 +23,9 @@ ALL_CHECKERS = [
     StructureChecker,
     RepetitionChecker,
     ClaimChecker,
+    SentenceOpenerChecker,
+    EntropyChecker,
+    FingerprintChecker,
 ]
 
 __all__ = ["ALL_CHECKERS"]

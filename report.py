@@ -107,6 +107,28 @@ def compute_ai_score(results: list[CheckerResult]) -> dict[str, float | str]:
             vague = metrics.get("vague_attributions", 0)
             contribution = min(vague * 3, 10)
 
+        elif checker == "sentence_openers":
+            np_ratio = metrics.get("noun_phrase_ratio", 0.4)
+            entropy = metrics.get("entropy", 3.0)
+            if np_ratio > 0.60:
+                contribution = 15
+            elif np_ratio > 0.55:
+                contribution = 10
+            elif np_ratio > 0.50:
+                contribution = 5
+            if entropy < 1.8:
+                contribution += 5
+            contribution = min(contribution, 15)
+
+        elif checker == "entropy":
+            cv = metrics.get("cv_entropy", 0.15)
+            if cv < 0.05:
+                contribution = 15
+            elif cv < 0.08:
+                contribution = 8
+            elif cv < 0.10:
+                contribution = 3
+
         breakdown[checker] = round(contribution, 1)
         score += contribution
 
