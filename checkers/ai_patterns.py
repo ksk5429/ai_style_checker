@@ -152,15 +152,18 @@ class AIPatternChecker:
                     ))
                     pattern_counts[desc] = pattern_counts.get(desc, 0) + 1
 
-        # Compute AI pattern density (issues per 1000 words)
+        # Compute AI pattern density (all severities count, but cap per-pattern contribution)
         word_count = len(text.split())
-        density = (len(issues) / max(word_count, 1)) * 1000
+        # Cap any single pattern type at 5 occurrences to prevent technical terms from dominating
+        capped_count = sum(min(count, 5) for count in pattern_counts.values())
+        density = (capped_count / max(word_count, 1)) * 1000
 
         return CheckerResult(
             checker_name=self.name,
             issues=tuple(issues),
             metrics={
                 "total_flags": len(issues),
+                "capped_flags": capped_count,
                 "density_per_1k_words": round(density, 2),
                 "top_patterns": dict(
                     sorted(pattern_counts.items(), key=lambda x: -x[1])[:5]
