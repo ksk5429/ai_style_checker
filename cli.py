@@ -176,6 +176,7 @@ def main() -> None:
                                 "line": i.line,
                                 "message": i.message,
                                 "match": i.match,
+                                "context": i.context,
                                 "suggestion": i.suggestion,
                             }
                             for i in r.issues
